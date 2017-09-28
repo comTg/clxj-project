@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vetoer.dao.ThicketDao">
+    <insert id="addThicket">
+        INSERT into thicket(name,siteType,addressType,address,price,state,recommed)
+                VALUES (#{name},#{addressType},#{address},#{price},#{state},#{recommed})
+    </insert>
+    <select id="queryById" resultType="Thicket">
+        <!--可以自由控制SQL-->
+        SELECT *
+        FROM thicket
+        where thicket_id=#{thickId}
+    </select>
+
+</mapper>
