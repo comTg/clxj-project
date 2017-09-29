@@ -52,6 +52,13 @@ public interface ThicketDao {
     List<Thicket> queryByName(String name);
 
     /**
+     * 查询丛林或闲居的总数量
+     * @param type
+     * @return
+     */
+    int countThicket(int type);
+
+    /**
      * 查询所有丛林闲居
      *
      * @param offset the offset  查询起始位置

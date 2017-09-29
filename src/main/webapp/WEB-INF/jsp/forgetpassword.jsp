@@ -16,7 +16,7 @@
                 <div class="form-group row">
                     <div class="col-lg-12">
                         <label for="phone">输入手机号码</label>
-                        <span id="loginTips" class="glyphicon">${error}</span>
+                        <span id="loginTips" class="glyphicon"><label class="label label-danger">${error}</label></span>
                         <input type="text" name="phone" class="form-control" id="phone" onblur="clxj.is_exists_phone()" />
                     </div>
                 </div>

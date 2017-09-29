@@ -40,5 +40,5 @@ public interface UserDao {
     /**
      * 修改用户密码
      */
-    int update(@Param("phone")String phone,@Param("password")String password);
+    int alterPasswd(@Param("phone")String phone,@Param("password")String password);
 }

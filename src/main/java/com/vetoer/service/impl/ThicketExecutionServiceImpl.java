@@ -9,9 +9,11 @@ import com.vetoer.service.ThicketExecutionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ThicketExecutionServiceImpl implements ThicketExecutionService {
     // 日志对象
     private Logger logger= LoggerFactory.getLogger(this.getClass());
@@ -32,17 +34,18 @@ public class ThicketExecutionServiceImpl implements ThicketExecutionService {
     public LeagueExecution addAdmin(ThicketAdmin admin) {
         if(admin!=null){
             ThicketAdmin queryAdmin = queryAdmin(admin.getPhone());
+            System.out.println(queryAdmin);
+            System.out.println("----------");
             // 该管理员没有注册
             if(queryAdmin==null){
                 int result = thicketDao.addAdmin(admin);
-                if(result<=0){
-                    // 增加后台用户失败
-                    return new LeagueExecution(admin.getPhone(), LeagueEnum.REGISTER_FAILED);
+                if(result>0){
+                    // 增加后台用户成功
+                    return new LeagueExecution(admin.getPhone(),LeagueEnum.REGISTER_SUCCESS);
                 }
-                return new LeagueExecution(admin.getPhone(),LeagueEnum.REGISTER_SUCCESS);
             }
         }
-        return null;
+        return new LeagueExecution(admin.getPhone(), LeagueEnum.REGISTER_FAILED);
     }
 
     @Override
@@ -72,5 +75,15 @@ public class ThicketExecutionServiceImpl implements ThicketExecutionService {
     public List<Thicket> queryByName(String name) {
         List<Thicket> thicket_list = thicketDao.queryByName(name);
         return thicket_list;
+    }
+
+    @Override
+    public int countThicket(int type) {
+        return thicketDao.countThicket(type);
+    }
+
+    @Override
+    public List<Thicket> queryAll(int offset, int limit, int type) {
+        return thicketDao.queryAll(offset,limit,type);
     }
 }

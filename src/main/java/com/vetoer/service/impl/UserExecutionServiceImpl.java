@@ -68,7 +68,7 @@ public class UserExecutionServiceImpl implements UserExecutionService {
             return execution;
         }else{
             // 手机号码存在,修改密码
-            int result = userDao.update(phone,password);
+            int result = userDao.alterPasswd(phone,password);
             if(result<=0){
                 return new UserExecution(phone,UserEnum.INNER_ERROR);
             }else{

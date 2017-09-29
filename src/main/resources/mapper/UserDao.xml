@@ -36,7 +36,7 @@
         VALUES(#{name},#{password},#{phone},#{email},#{realname},#{gender},#{idcard},#{registerTime},#{state})
     </insert>
     <update id="alterPasswd" parameterType="String">
-        update user
+        update users
         set password=#{password}
         where phone=#{phone}
     </update>

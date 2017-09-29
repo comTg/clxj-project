@@ -5,7 +5,7 @@
   Time: 上午8:22
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!Doctype html>
 <head>
     <title>加盟${addressType}</title>
@@ -30,9 +30,11 @@
         <div class="col-md-2 column">
         </div>
         <div class="col-md-6 column">
-            <form role="form">
+            <form role="form" action="/clxj/league" method="post">
                 <div class="form-group">
-                    <label for="name">${addressType}名</label><input type="text" class="form-control" id="name" name="name" />
+                    <label for="name">${addressType}名
+                        <span id="loginTips" class="glyphicon"><label class="label label-danger">${error}</label></span>
+                    </label><input type="text" class="form-control" id="name" name="name" />
                 </div>
                 <div class="form-group">
                     <label for="siteType">地址类型</label>

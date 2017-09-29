@@ -38,10 +38,16 @@
         where t.admin_id=a.admin_id
         and t.name like #{name}
     </select>
+    <select id="countThicket" resultType="int">
+        select count(*)
+        from thicket
+        where type=#{type}
+    </select>
     <select id="queryAll" resultMap="thicketResult">
         select *
         from thicket t,thicketadmin a
         where t.type=#{type}
+        and t.admin_id=a.admin_id
         ORDER BY t.thicket_id
         LIMIT #{offset},#{limit}
     </select>
@@ -51,6 +57,7 @@
         <result property="siteType" column="siteType" />
         <result property="addressType" column="addressType" />
         <result property="address" column="address" />
+        <result property="price" column="price" />
         <result property="state" column="state" />
         <result property="recommed" column="recommed" />
         <result property="type" column="type" />

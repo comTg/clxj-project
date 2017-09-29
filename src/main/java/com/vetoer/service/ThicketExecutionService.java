@@ -19,5 +19,8 @@ public interface ThicketExecutionService {
     List<Thicket> queryByAdminPhone(String phone,int type);
     // 通过给定丛林闲居名查询
     List<Thicket> queryByName(String name);
+    // 查询丛林或闲居的数量
+    int countThicket(int type);
     // 查询根据限定条件查询
+    List<Thicket> queryAll(int offset,int limit,int type);
 }

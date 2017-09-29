@@ -9,6 +9,11 @@
 <!Doctype html>
 <head>
     <title>Hello world</title>
+    <script type="text/javascript">
+        $(function () {
+            location.href = "/clxj/index";
+        })
+    </script>
     <jsp:include page="/WEB-INF/jsp/common/webnavigation.jsp" flush="true" />
 </head>
 <body>

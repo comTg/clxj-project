@@ -84,7 +84,7 @@ var clxj = {
     login_success:function(phone,state,url) {
         console.log("登录手机:"+phone);
         if(state){
-            $.cookie('userPhone',phone);
+            $.cookie('userPhone',phone,{expires: 7, path: '/clxj'});
         }
         var timeBox = $('#time-box');
         var now = new Date().getTime();
@@ -113,6 +113,8 @@ var clxj = {
     logout:function () {
         if($.cookie('userPhone')){
             $.removeCookie('userPhone',{path:'/clxj'});
+            // window.location.reload();
+            // $.cookies.del('userPhone');
         }
     },
     getcode:function () {

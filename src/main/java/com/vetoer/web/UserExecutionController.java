@@ -3,9 +3,12 @@ package com.vetoer.web;
 import com.sun.org.glassfish.gmbal.ParameterNames;
 import com.vetoer.dto.AjaxResult;
 import com.vetoer.dto.UserExecution;
+import com.vetoer.entity.Thicket;
 import com.vetoer.entity.User;
 import com.vetoer.entity.Validation;
+import com.vetoer.service.ThicketExecutionService;
 import com.vetoer.service.UserExecutionService;
+import com.vetoer.util.ModelUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @Component
@@ -24,6 +28,8 @@ import java.util.Random;
 public class UserExecutionController {
     @Autowired
     private UserExecutionService userExecutionService;
+    @Autowired
+    private ThicketExecutionService thickService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
@@ -37,10 +43,7 @@ public class UserExecutionController {
         UserExecution loginExecution = userExecutionService.loginUser(user.getPhone(), user.getPassword());
         if (loginExecution.getState() == 1) {
             System.out.println("登录成功!");
-            model.addAttribute("phone", user.getPhone());
-            model.addAttribute("tips", "登录成功");
-            model.addAttribute("url", "/clxj/index");
-            model.addAttribute("state",true);
+            model = ModelUtil.alterModel(model,user.getPhone(),"登录成功","/clxj/index",true);
             return "executionSuccess";
         } else {
             System.out.println("登录失败");
@@ -61,10 +64,7 @@ public class UserExecutionController {
         UserExecution registerExecution = userExecutionService.registerUser(user);
         if (registerExecution.getState() == 1) {
             System.out.println("注册成功");
-            model.addAttribute("phone", user.getPhone());
-            model.addAttribute("tips", "注册成功");
-            model.addAttribute("url", "/clxj/login");
-            model.addAttribute("state",false);
+            model = ModelUtil.alterModel(model,user.getPhone(),"注册成功","/clxj/login",false);
             return "executionSuccess";
         } else {
             model.addAttribute("error", registerExecution.getStateInfo());
@@ -150,10 +150,7 @@ public class UserExecutionController {
                 System.out.println("验证码输入正确");
                 session.removeAttribute(valida_phone);
                 session.setAttribute("alterPasswd",phone);
-                model.addAttribute("phone",phone);
-                model.addAttribute("tips","验证码输入正确");
-                model.addAttribute("url","/clxj/changePasswd");
-                model.addAttribute("state",false);
+                model = ModelUtil.alterModel(model,phone,"验证码输入正确","/clxj/changePasswd",false);
                 return "executionSuccess";
             }else{
                 // 验证码输入错误,跳回前一个页面
@@ -212,7 +209,12 @@ public class UserExecutionController {
      */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
-
+        // 查询丛林
+        List<Thicket> thickets_cl = thickService.queryAll(0,10,1);
+        // 查询闲居
+        List<Thicket> thickets_xj = thickService.queryAll(0,10,0);
+        model.addAttribute("cl_list",thickets_cl);
+        model.addAttribute("xj_list",thickets_xj);
         return "index";
     }
 }

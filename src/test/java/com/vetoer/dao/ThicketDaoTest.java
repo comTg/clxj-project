@@ -65,4 +65,23 @@ public class ThicketDaoTest extends BaseTest {
             System.out.println(thicket);
         }
     }
+    @Test
+    public void testQueryAll(){
+        List<Thicket> thickets_cl = thicketDao.queryAll(0,1000,1);
+        for(Thicket thicket:thickets_cl){
+            System.out.println(thicket);
+        }
+    }
+    @Test
+    public void testCount(){
+        int result = thicketDao.countThicket(0);
+        System.out.println("-------");
+        System.out.println(result);
+    }
+    @Test
+    public void test01(){
+        int count = 33;
+        int temp = (count/10)+1;
+        System.out.println(temp);
+    }
 }
