@@ -28,12 +28,7 @@ public class UserExecutionController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
         // 获取登录页面
-        if (model.containsAttribute("user")) {
-            System.out.println("用户已登录");
-            return "index";
-        } else {
-            return "login";
-        }
+        return "login";
 
     }
 
@@ -42,14 +37,15 @@ public class UserExecutionController {
         UserExecution loginExecution = userExecutionService.loginUser(user.getPhone(), user.getPassword());
         if (loginExecution.getState() == 1) {
             System.out.println("登录成功!");
-            model.addAttribute("user", loginExecution.getUser());
+            model.addAttribute("phone", user.getPhone());
             model.addAttribute("tips", "登录成功");
             model.addAttribute("url", "/clxj/index");
+            model.addAttribute("state",true);
             return "executionSuccess";
         } else {
             System.out.println("登录失败");
             model.addAttribute("error", loginExecution.getStateInfo());
-            return "login";
+            return "redirect:login";
         }
     }
 
@@ -65,9 +61,10 @@ public class UserExecutionController {
         UserExecution registerExecution = userExecutionService.registerUser(user);
         if (registerExecution.getState() == 1) {
             System.out.println("注册成功");
-            model.addAttribute("user", registerExecution.getUser());
+            model.addAttribute("phone", user.getPhone());
             model.addAttribute("tips", "注册成功");
             model.addAttribute("url", "/clxj/login");
+            model.addAttribute("state",false);
             return "executionSuccess";
         } else {
             model.addAttribute("error", registerExecution.getStateInfo());
@@ -130,14 +127,20 @@ public class UserExecutionController {
             return new AjaxResult<UserExecution>(false,"手机号不存在");
         }
     }
+
+    /**
+     * 判断验证码是否正确
+     * @param validation
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/alterPasswd",method = RequestMethod.POST)
-    //@RequestParam("phone") String phone, @RequestParam("validatecode") String validatecode
     public String validacode(Validation validation,HttpServletRequest request,
-                             HttpServletResponse response){
+                             HttpServletResponse response,Model model){
         HttpSession session = request.getSession();
         String phone = validation.getPhone();
         String validatecode = validation.getValidatecode();
-        System.out.println(validation+"/////////");
         String valida_phone = phone+"code";
         if(session.getAttribute(valida_phone)!=null){
             String systemcode = session.getAttribute(valida_phone).toString().toLowerCase();
@@ -145,16 +148,61 @@ public class UserExecutionController {
             if(usercode.equals(systemcode)) {
                 // 验证码输入正确
                 System.out.println("验证码输入正确");
-                request.setAttribute("phone",phone);
+                session.removeAttribute(valida_phone);
+                session.setAttribute("alterPasswd",phone);
+                model.addAttribute("phone",phone);
+                model.addAttribute("tips","验证码输入正确");
+                model.addAttribute("url","/clxj/changePasswd");
+                model.addAttribute("state",false);
                 return "executionSuccess";
             }else{
                 // 验证码输入错误,跳回前一个页面
                 System.out.println("验证码输入错误");
+                model.addAttribute("error","验证码输入错误");
                 return "forgetpassword";
             }
         }else{
             return "login";
         }
+    }
+    /**
+     * 找回密码表单页面
+     */
+    @RequestMapping(value = "/changePasswd",method = RequestMethod.GET)
+    public String changePasswd(HttpServletRequest request,
+                               HttpServletResponse response,Model model){
+        HttpSession session = request.getSession();
+        if(session.getAttribute("alterPasswd")!=null){
+           model.addAttribute("phone",session.getAttribute("alterPasswd").toString());
+            return "changePasswd";
+        }else{
+            return null;
+        }
+    }
+    /**
+     * 找回密码,从用户输入表单获得手机号码和密码
+     */
+    @RequestMapping(value = "/changePasswdform",method = RequestMethod.POST)
+    public String alterPasswd(User user,HttpServletRequest request,
+                              HttpServletResponse response,Model model){
+        HttpSession session = request.getSession();
+        if(user!=null && session.getAttribute("alterPasswd")!=null){
+            UserExecution execution = userExecutionService.findPasswd(user.getPhone(),user.getPassword());
+            if(execution.getState()==0){
+                // 手机号码不存在
+//                request.setAttribute("error","手机号码不存在");
+                model.addAttribute("error","手机号码不存在");
+                return "changePasswd";
+            }else if(execution.getState()==-2){
+                // 系统错误,不能修改密码
+//                request.setAttribute("error","系统错误,不能修改密码");
+                model.addAttribute("error","系统错误,不能修改密码,请重试");
+                return "changePasswd";
+            }
+            // 修改成功
+            return "login";
+        }
+        return null;
     }
     /**
      * 显示首页,在首页内容中显示丛林和闲居的信息

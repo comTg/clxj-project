@@ -38,7 +38,7 @@
                 </div>
                 <div class="input-prepend">
                     <span class="glyphicon glyphicon-earphone"></span>
-                    <input type="number" placeholder="手机号码" id="phone" name="phone" onblur="clxj.is_exists_phone()">
+                    <input type="text" placeholder="手机号码" id="phone" name="phone" onblur="clxj.is_exists_phone()">
                 </div>
                 <br>
                 <br>

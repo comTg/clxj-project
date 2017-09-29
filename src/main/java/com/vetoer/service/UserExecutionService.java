@@ -12,6 +12,8 @@ public interface UserExecutionService {
     UserExecution registerUser(User user);
     // 根据用户手机号码和密码登录
     UserExecution loginUser(String phone,String password);
-    // 根据手机找回密码
+    // 判断手机号码是否注册
     UserExecution queryByPhone(String phone);
+    // 找回密码
+    UserExecution findPasswd(String phone,String password);
 }

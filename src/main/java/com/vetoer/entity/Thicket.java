@@ -4,7 +4,7 @@ package com.vetoer.entity;
  * 丛林实体类
  */
 public class Thicket {
-    private int thicket_id;
+    private int thicketId;
     private String name;
     private String siteType;
     private String addressType;
@@ -12,12 +12,14 @@ public class Thicket {
     private double price;
     private int  state;
     private int recommed;
+    private int type;  // 1 表示丛林,0表示闲居
+    private ThicketAdmin thicketAdmin;
 
     public Thicket() {
     }
 
-    public Thicket(int thicket_id, String name, String siteType, String addressType, String address, double price, int state, int recommed) {
-        this.thicket_id = thicket_id;
+    public Thicket(int thicketId, String name, String siteType, String addressType, String address, double price, int state, int recommed,int type) {
+        this.thicketId = thicketId;
         this.name = name;
         this.siteType = siteType;
         this.addressType = addressType;
@@ -25,15 +27,29 @@ public class Thicket {
         this.price = price;
         this.state = state;
         this.recommed = recommed;
+        this.type = type;
     }
 
-    public int getThicket_id() {
-
-        return thicket_id;
+    public Thicket(int thicketId, String name, String siteType, String addressType, String address, double price, int state, int recommed, int type, ThicketAdmin thicketAdmin) {
+        this.thicketId = thicketId;
+        this.name = name;
+        this.siteType = siteType;
+        this.addressType = addressType;
+        this.address = address;
+        this.price = price;
+        this.state = state;
+        this.recommed = recommed;
+        this.type = type;
+        this.thicketAdmin = thicketAdmin;
     }
 
-    public void setThicket_id(int thicket_id) {
-        this.thicket_id = thicket_id;
+    public int getThicketId() {
+
+        return thicketId;
+    }
+
+    public void setThicketId(int thicketId) {
+        this.thicketId = thicketId;
     }
 
     public String getName() {
@@ -88,14 +104,31 @@ public class Thicket {
         return recommed;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public ThicketAdmin getThicketAdmin() {
+        return thicketAdmin;
+    }
+
+    public void setThicketAdmin(ThicketAdmin thicketAdmin) {
+        this.thicketAdmin = thicketAdmin;
+    }
+
     public void setRecommed(int recommed) {
+
         this.recommed = recommed;
     }
 
     @Override
     public String toString() {
         return "Thicket{" +
-                "thicket_id=" + thicket_id +
+                "thicketId=" + thicketId +
                 ", name='" + name + '\'' +
                 ", siteType='" + siteType + '\'' +
                 ", addressType='" + addressType + '\'' +
@@ -103,6 +136,8 @@ public class Thicket {
                 ", price=" + price +
                 ", state=" + state +
                 ", recommed=" + recommed +
+                ", type=" + type +
+                ", thicketAdmin=" + thicketAdmin +
                 '}';
     }
 }

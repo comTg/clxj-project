@@ -25,7 +25,7 @@ public class UserExecution {
         this.user = user;
     }
 
-    // 执行失败
+    // 执行不一定失败,不返回user
     public UserExecution(String phone, UserEnum statEnum){
         this.phone = phone;
         this.state = statEnum.getState();

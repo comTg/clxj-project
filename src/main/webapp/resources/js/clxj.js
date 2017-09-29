@@ -81,9 +81,11 @@ var clxj = {
             });
         }
     },
-    login_success:function(phone,url) {
+    login_success:function(phone,state,url) {
         console.log("登录手机:"+phone);
-        $.cookie('userPhone',phone);
+        if(state){
+            $.cookie('userPhone',phone);
+        }
         var timeBox = $('#time-box');
         var now = new Date().getTime();
         var to_time = new Date(now+2000);
@@ -139,7 +141,7 @@ var clxj = {
             btn.disabled=true;
             // 倒计时恢复按钮
             var now = new Date().getTime();
-            var to_time = new Date(now+60000);
+            var to_time = new Date(now+59000);
             $('#loginTips').hide().html('<label class="label label-danger">验证码已发送</label>').show(300);
             btn.countdown(to_time,function (event) {
                 //时间格式

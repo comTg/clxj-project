@@ -34,11 +34,13 @@
 </body>
 <script src="/resources/js/jquery.countdown.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        var phone = ${user.phone};
+    $(function () {
+        var phone = ${phone};
         var jump_url = "${url}";
+        // 传入state判断是否需要写入cookie
+        var state = ${state};
         console.log(phone);
-        clxj.login_success(phone,jump_url);
+        clxj.login_success(phone,state,jump_url);
     });
 //    $(function () {
 //        // 获取手机号码

@@ -48,15 +48,32 @@ public class UserExecutionServiceImpl implements UserExecutionService {
             return new UserExecution(findUser.getUserId(), phone, UserEnum.SUCCESS, findUser);
         }
     }
-    // 找回密码
     // 判断手机号码是否存在
     @Override
     public UserExecution queryByPhone(String phone) {
         User finduser = userDao.queryByPhone(phone);
         if(finduser==null){
+            // 返回 state=0,表示手机号码未注册
             return new UserExecution(phone, UserEnum.IS_EXISTS);
         }else{
+            // 返回 state=1
             return new UserExecution(phone,UserEnum.HAVE_REGISTER);
+        }
+    }
+    // 找回密码
+    @Override
+    public UserExecution findPasswd(String phone, String password) {
+        UserExecution execution = queryByPhone(phone);
+        if(execution.getState()==0){
+            return execution;
+        }else{
+            // 手机号码存在,修改密码
+            int result = userDao.update(phone,password);
+            if(result<=0){
+                return new UserExecution(phone,UserEnum.INNER_ERROR);
+            }else{
+                return new UserExecution(phone,UserEnum.SUCCESS);
+            }
         }
     }
 }

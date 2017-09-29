@@ -14,8 +14,9 @@
                     <img alt="140x140" src="/resources/images/avatar-anzu.jpg" style="width:140px;height:140px"/>
                 </div>
                 <div class="col-md-6 column">
-                    <form role="form">
+                    <form role="form" action="/clxj/changePasswdform" method="post">
                         <div class="form-group">
+                            <span id="loginTips" class="glyphicon">${error}</span>
                             <label for="exampleInputEmail1">手机号码</label><input type="text" class="form-control" id="exampleInputEmail1" name="phone" value="<%=request.getAttribute("phone")%>" />
                         </div>
                         <div class="form-group">

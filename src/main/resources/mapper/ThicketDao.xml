@@ -3,15 +3,63 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vetoer.dao.ThicketDao">
-    <insert id="addThicket">
-        INSERT into thicket(name,siteType,addressType,address,price,state,recommed)
-                VALUES (#{name},#{addressType},#{address},#{price},#{state},#{recommed})
+    <select id="queryAdminByPhone" resultType="ThicketAdmin">
+        select *
+        from thicketadmin
+        where phone=#{phone}
+    </select>
+    <insert id="addAdmin" parameterType="ThicketAdmin">
+        insert INTO
+        thicketadmin(admin_id,name,phone,password)
+        values(#{adminId},#{name},#{phone},#{password})
     </insert>
-    <select id="queryById" resultType="Thicket">
+    <insert id="addThicket" parameterType="Thicket">
+        INSERT into thicket(name,siteType,addressType,address,price,state,recommed,type,admin_id)
+                VALUES (#{name},#{siteType},#{addressType},#{address},#{price},#{state},#{recommed},#{type},#{thicketAdmin.adminId})
+    </insert>
+    <select id="queryById" resultMap="thicketResult">
         <!--可以自由控制SQL-->
         SELECT *
-        FROM thicket
-        where thicket_id=#{thickId}
+        FROM thicket t,thicketadmin a
+        where t.admin_id=a.admin_id
+        and t.thicket_id=#{id}
+        and t.type=#{type}
     </select>
+    <select id="queryByAdminPhone" resultMap="thicketResult">
+        select *
+        from thicket t,thicketadmin a
+        where t.admin_id=a.admin_id
+        and a.phone=#{phone}
+        and t.type=#{type}
+    </select>
+    <select id="queryByName" resultMap="thicketResult">
+        SELECT *
+        from thicket t,thicketadmin a
+        where t.admin_id=a.admin_id
+        and t.name like #{name}
+    </select>
+    <select id="queryAll" resultMap="thicketResult">
+        select *
+        from thicket t,thicketadmin a
+        where t.type=#{type}
+        ORDER BY t.thicket_id
+        LIMIT #{offset},#{limit}
+    </select>
+    <resultMap id="thicketResult" type="Thicket">
+        <id property="thicketId" column="thicket_id" />
+        <result property="name" column="name" />
+        <result property="siteType" column="siteType" />
+        <result property="addressType" column="addressType" />
+        <result property="address" column="address" />
+        <result property="state" column="state" />
+        <result property="recommed" column="recommed" />
+        <result property="type" column="type" />
+        <association property="thicketAdmin" javaType="ThicketAdmin">
+            <id property="adminId" column="admin_id" />
+            <result property="name" column="name" />
+            <result property="phone" column="phone" />
+            <result property="password" column="password" />
+        </association>
+    </resultMap>
 
 </mapper>
