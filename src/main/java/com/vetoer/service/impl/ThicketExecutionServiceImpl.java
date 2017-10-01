@@ -61,8 +61,8 @@ public class ThicketExecutionServiceImpl implements ThicketExecutionService {
     }
 
     @Override
-    public Thicket queryById(int id,int type) {
-        Thicket thicket = thicketDao.queryById(id,type);
+    public Thicket queryById(int id) {
+        Thicket thicket = thicketDao.queryById(id);
         return thicket;
     }
 

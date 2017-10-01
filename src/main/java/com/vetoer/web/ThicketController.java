@@ -128,6 +128,14 @@ public class ThicketController {
         model.addAttribute("urlType",addressType);
         return "thicketDetail";
     }
-
+    // 进入丛林闲居详情页面
+    @RequestMapping(value = "/thicket/detail/id={id}")
+    public String getThicketDetail(@PathVariable("id")int id,Model model){
+        Thicket thicket = thickService.queryById(id);
+        model.addAttribute("thicket",thicket);
+//        model.addAttribute("name",thicket.getName());
+//        model.addAttribute("price",thicket.getPrice());
+        return "onethicket";
+    }
 
 }

@@ -37,7 +37,7 @@
                                     ${thicket.address}
                                 </p>
                                 <p>
-                                    <button class="btn btn-primary">${thicket.price}元</button> <a class="btn" href="#">查看详情</a>
+                                    <button class="btn btn-primary">${thicket.price}元</button> <a class="btn" href="/clxj/thicket/detail/id=${thicket.thicketId}">查看详情</a>
                                 </p>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                         ${thicket.address}
                                 </p>
                                 <p>
-                                    <button class="btn btn-primary">${thicket.price}元</button> <a class="btn" href="#">查看详情</a>
+                                    <button class="btn btn-primary">${thicket.price}元</button> <a class="btn" href="/clxj/thicket/detail/id=${thicket.thicketId}">查看详情</a>
                                 </p>
                             </div>
                         </div>

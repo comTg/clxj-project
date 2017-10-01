@@ -37,7 +37,7 @@ public interface ThicketDao {
      * @param id the id
      * @return the thicket
      */
-    Thicket queryById(@Param("id")int id,@Param("type")int type);
+    Thicket queryById(@Param("id")int id);
 
     /**
      * 通过用户电话查询他旗下的丛林闲居

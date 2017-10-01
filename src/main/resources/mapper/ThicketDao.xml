@@ -23,7 +23,6 @@
         FROM thicket t,thicketadmin a
         where t.admin_id=a.admin_id
         and t.thicket_id=#{id}
-        and t.type=#{type}
     </select>
     <select id="queryByAdminPhone" resultMap="thicketResult">
         select *

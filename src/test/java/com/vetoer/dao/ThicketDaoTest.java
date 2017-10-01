@@ -38,8 +38,7 @@ public class ThicketDaoTest extends BaseTest {
     @Test
     public void testqueryById(){
         int id = 2;
-        int type=1;
-        Thicket thicket = thicketDao.queryById(id,type);
+        Thicket thicket = thicketDao.queryById(id);
         System.out.println(thicket);
     }
     @Test

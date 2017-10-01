@@ -14,7 +14,7 @@ public interface ThicketExecutionService {
     // 加盟丛林闲居
     LeagueExecution addThicket(Thicket tck);
     // 通过给定id查询丛林闲居信息
-    Thicket queryById(int id,int type);
+    Thicket queryById(int id);
     // 通过管理员电话查询加盟的丛林闲居
     List<Thicket> queryByAdminPhone(String phone,int type);
     // 通过给定丛林闲居名查询

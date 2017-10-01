@@ -8,64 +8,60 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!Doctype html>
 <head>
-    <title>${name}详情</title>
+    <title>${thicket.name}详情</title>
+    <jsp:include page="common/webnavigation.jsp" flush="true" />
 </head>
 <body>
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="row clearfix">
-                <div class="col-md-2 column">
-                    <img alt="140x140" src="v3/default3.jpg" />
+                <div class="col-md-3 column">
+                    <img alt="140x140" src="/resources/images/test.jpg" width="200px" height="133px" />
                 </div>
-                <div class="col-md-4 column">
+                <div class="col-md-5 column">
                     <dl>
                         <dt>
-                            Description lists
+                            丛林闲居名:
                         </dt>
                         <dd>
-                            A description list is perfect for defining terms.
+                            ${thicket.name}
                         </dd>
                         <dt>
-                            Euismod
+                            地址类型:
                         </dt>
                         <dd>
-                            Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
-                        </dd>
-                        <dd>
-                            Donec id elit non mi porta gravida at eget metus.
+                            ${thicket.siteType}
                         </dd>
                         <dt>
-                            Malesuada porta
+                            住址类型:
                         </dt>
                         <dd>
-                            Etiam porta sem malesuada magna mollis euismod.
+                            ${thicket.addressType}
                         </dd>
                         <dt>
-                            Felis euismod semper eget lacinia
+                            详细地址:
                         </dt>
                         <dd>
-                            Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                            ${thicket.address}
                         </dd>
                     </dl>
                 </div>
-                <div class="col-md-6 column">
+                <div class="col-md-4 column">
                     <form role="form">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label><input type="email" class="form-control" id="exampleInputEmail1" />
+                            <label for="totalprice">价格/元</label>
+                            <input type="text" class="form-control" value="${thicket.price}" name="totalprice" id="totalprice" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label><input type="password" class="form-control" id="exampleInputPassword1" />
+                            <label for="exampleInputEmail1">预订天数</label>
+                            <input type="number" class="form-control" id="exampleInputEmail1" name="days" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">File input</label><input type="file" id="exampleInputFile" />
-                            <p class="help-block">
-                                Example block-level help text here.
-                            </p>
+                            <label for="exampleInputPassword1">其它需求</label>
+                            <textarea class="form-control" id="exampleInputPassword1" rows="5" cols="10"></textarea>
                         </div>
-                        <div class="checkbox">
-                            <label><input type="checkbox" />Check me out</label>
-                        </div> <button type="submit" class="btn btn-default">Submit</button>
+                        <button type="submit" class="btn btn-default btn-danger">预订</button>
                     </form>
                 </div>
             </div>
